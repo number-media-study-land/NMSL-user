@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import GradationBg from "../components/GradationBg";
+import GradationBg from "../../components/GradationBg";
 import NewestCourses from "./components/NewestCourses";
 
 export default {

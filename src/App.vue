@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <global-header/>
+    <div class="seize-a-seat"></div>
     <router-view/>
   </div>
 </template>
@@ -26,5 +27,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+.seize-a-seat {
+  height: 11.3vh;
+  min-height: 54px;
+  /* margin-top: 11.3vh; */
 }
 </style>

@@ -23,12 +23,14 @@ export default {
 
 <style lang="less" scoped>
 .GlobalHeader {
-  max-width: 73.75rem;
+  position: absolute;
+  top: 0;
+  width: 74vw;
   height: 9.5vh;
+  min-height: 54px;
   padding: 0 1.5rem;
   margin-top: 1.8vh;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 13vw;
   font-size: 15px;
   z-index: 10;
 
