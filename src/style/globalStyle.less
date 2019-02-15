@@ -1,0 +1,14 @@
+.clear-float {
+  zoom: 1;
+}
+.clear-float::after {
+  content: "";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+}
+
+.border-none {
+  border: none!important;
+}

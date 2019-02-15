@@ -6,7 +6,7 @@
     </router-link>
     <div class="headerInfo">
       <div class="infoItem">
-        <router-link :to="{ path: 'courses' }">所有课程</router-link>
+        <router-link :to="{ path: 'coursemenu' }">所有课程</router-link>
       </div>
       <div class="headerLine"></div>
       <div class="userPoint">个人中心</div>
@@ -58,7 +58,6 @@ export default {
     }
 
     .infoItem a {
-      text-decoration: none;
       color: #33313b;
       letter-spacing: 1px;
     }
