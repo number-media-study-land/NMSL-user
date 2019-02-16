@@ -30,7 +30,6 @@ export default {
 }
 .seize-a-seat {
   height: 11.3vh;
-  min-height: 54px;
-  /* margin-top: 11.3vh; */
+  min-height: 64px;
 }
 </style>

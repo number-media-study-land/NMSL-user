@@ -32,7 +32,7 @@ export default {
 
 <style lang="less" scoped>
 .coursemenu {
-  margin-top: 50px;
+  margin-top: 40px;
   background: #f3f5f7;
   min-height: calc(88.7vh - 50px);
 

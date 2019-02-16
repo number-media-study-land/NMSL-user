@@ -2,33 +2,39 @@
   <div class="NewestCourses">
     <div class="levelTitle">最新课程</div>
     <div class="newestCourseBox">
-      <div class="CourseBox">
-        <img src="https://img3.mukewang.com/5c176d7800018a3106000338-240-135.jpg" alt>
-        <div class="imgShadow">
-          <h3 class="courseTitle">灰度值学习</h3>
+      <router-link class="CourseBox" :to="{ path: '/courseDetail' }">
+        <div>
+          <img src="https://img3.mukewang.com/5c176d7800018a3106000338-240-135.jpg" alt>
+          <div class="imgShadow">
+            <h3 class="courseTitle">灰度值学习</h3>
+          </div>
+          <div class="courseInfoBox">
+            <p class="info">学习图像处理中的基础：灰度值</p>
+          </div>
         </div>
-        <div class="courseInfoBox">
-          <p class="info">学习图像处理中的基础：灰度值</p>
+      </router-link>
+      <router-link class="CourseBox" :to="{ path: '/courseDetail' }">
+        <div>
+          <img src="https://img3.mukewang.com/5c176d7800018a3106000338-240-135.jpg" alt>
+          <div class="imgShadow">
+            <h3 class="courseTitle">灰度值学习</h3>
+          </div>
+          <div class="courseInfoBox">
+            <p class="info">学习图像处理中的基础：灰度值</p>
+          </div>
         </div>
-      </div>
-      <div class="CourseBox">
-        <img src="https://img3.mukewang.com/5c176d7800018a3106000338-240-135.jpg" alt>
-        <div class="imgShadow">
-          <h3 class="courseTitle">灰度值学习</h3>
+      </router-link>
+      <router-link class="CourseBox" :to="{ path: '/courseDetail' }">
+        <div>
+          <img src="https://img3.mukewang.com/5c176d7800018a3106000338-240-135.jpg" alt>
+          <div class="imgShadow">
+            <h3 class="courseTitle">灰度值学习</h3>
+          </div>
+          <div class="courseInfoBox">
+            <p class="info">学习图像处理中的基础：灰度值</p>
+          </div>
         </div>
-        <div class="courseInfoBox">
-          <p class="info">学习图像处理中的基础：灰度值</p>
-        </div>
-      </div>
-      <div class="CourseBox">
-        <img src="https://img3.mukewang.com/5c176d7800018a3106000338-240-135.jpg" alt>
-        <div class="imgShadow">
-          <h3 class="courseTitle">灰度值学习</h3>
-        </div>
-        <div class="courseInfoBox">
-          <p class="info">学习图像处理中的基础：灰度值</p>
-        </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -66,7 +72,7 @@ export default {
     img {
       width: 100%;
       height: 31vh;
-      max-height: 167px;
+      max-height: 180px;
       vertical-align: middle;
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
@@ -77,13 +83,13 @@ export default {
       top: 0;
       width: 100%;
       height: 31vh;
-      max-height: 167px;
+      max-height: 180px;
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
       background: rgba(43, 43, 40, 0.5);
 
       .courseTitle {
-        padding: 22% 5% 0 10%;
+        padding: 10vh 5% 0 10%;
         margin: 0;
         color: #fff;
         font-size: 1.8vw;
@@ -100,9 +106,9 @@ export default {
       border-bottom-right-radius: 8px;
       font-size: 1rem;
       background: #fff;
+      color: #333;
     }
   }
-
   .CourseBox:hover {
     transform: translate(0, -15px);
   }

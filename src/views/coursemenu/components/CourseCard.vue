@@ -30,6 +30,7 @@ export default {
   height: 270px;
   width: 216px;
   margin: 0 0 18px 18px;
+  background: #f8f8f8;
   transition: 0.3s all linear;
   cursor: pointer;
 

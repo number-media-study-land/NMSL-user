@@ -28,7 +28,7 @@ export default {
   width: 74vw;
   height: 9.5vh;
   min-height: 54px;
-  padding: 0 1.5rem;
+  padding: 0 1.4vw;
   margin-top: 1.8vh;
   margin-left: 13vw;
   font-size: 15px;
