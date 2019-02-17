@@ -9,7 +9,9 @@
         <router-link :to="{ path: 'coursemenu' }">所有课程</router-link>
       </div>
       <div class="headerLine"></div>
-      <div class="userPoint">个人中心</div>
+      <div class="userPoint">
+        <router-link :to="{ path: 'user' }">个人中心</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -85,6 +87,10 @@ export default {
       white-space: nowrap;
       cursor: pointer;
       transition: 0.3s;
+
+      a {
+        color: #f5f5f5;
+      }
     }
     .userPoint:hover {
       background-color: #2f89fc;

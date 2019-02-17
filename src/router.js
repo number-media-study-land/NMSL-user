@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "./views/home/Home.vue";
 import Coursemenu from "./views/coursemenu/Coursemenu.vue";
 import CourseDetail from "./views/coursedetail/CourseDetail.vue";
+import User from "./views/user/User.vue";
 
 Vue.use(Router);
 
@@ -24,6 +25,11 @@ export default new Router({
       path: "/coursedetail",
       name: "coursedetail",
       component: CourseDetail
+    },
+    {
+      path: "/user",
+      name: "user",
+      component: User
     }
   ]
 });
