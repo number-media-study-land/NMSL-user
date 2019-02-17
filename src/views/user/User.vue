@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import LearnBox from "./LearnBox";
+import LearnBox from "./components/LearnBox";
 
 export default {
   name: "user",
