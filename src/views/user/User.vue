@@ -3,7 +3,7 @@
     <div class="userInfoBox">
       <div class="BgImg">
         <img
-          src="https://smx-1253369066.cos.ap-chengdu.myqcloud.com/userBG.jpg?q-sign-algorithm=sha1&q-ak=AKIDrNJRU2h9C468fEK2WhHpwPQoVFrhtU4i&q-sign-time=1550390886;1550392686&q-key-time=1550390886;1550392686&q-header-list=&q-url-param-list=&q-signature=368b2d1f75938edc7d83045223844b966b64d9aa&x-cos-security-token=247de2a053700f6811fab2204ad7b8d77c66ac6510001"
+          src="https://smx-1253369066.cos.ap-chengdu.myqcloud.com/userBG.jpg?q-sign-algorithm=sha1&q-ak=AKID2k1BFPRAKYnYrXit25l9drwEnQSEfnzu&q-sign-time=1551355407;1551357207&q-key-time=1551355407;1551357207&q-header-list=&q-url-param-list=&q-signature=e3bd787f41e350ec04ab31f1e1089ec08efb4810&x-cos-security-token=8b71376bedabf2c1bf57bf2edb5aaefe29de1f9f10001"
           alt
         >
       </div>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <global-header/>
-    <div class="seize-a-seat"></div>
+    <!-- <div class="seize-a-seat"></div> -->
     <router-view/>
   </div>
 </template>
@@ -11,6 +11,7 @@ import GlobalHeader from "./components/GlobalHeader";
 
 import "./style/globalStyle.less";
 import "./style/clear.less";
+import "./style/changeUI.less";
 
 export default {
   name: "app",
