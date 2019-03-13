@@ -7,11 +7,21 @@
       </router-link>
       <div class="headerInfo">
         <div class="infoItem">
-          <router-link :to="{ path: 'coursemenu' }">所有课程</router-link>
+          <router-link :to="{ path: '/coursemenu' }">所有课程</router-link>
         </div>
         <div class="headerLine"></div>
-        <div class="userPoint">
-          <router-link :to="{ path: 'user' }">个人中心</router-link>
+
+        <router-link :to="{ path: '/user' }" v-if="isLogIn">
+          <div class="userPoint">个人中心</div>
+        </router-link>
+
+        <div v-else>
+          <router-link :to="{ path: '/login' }">
+            <div class="logIn">登录</div>
+          </router-link>
+          <router-link :to="{ path: '/register' }">
+            <div class="register">注册</div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -24,14 +34,17 @@ export default {
   components: {},
   data() {
     return {
-      blackTheme: false
+      blackTheme: false,
+      isLogIn: false
     };
   },
   mounted() {
-    if (this.$route.path.indexOf("/learn") !== -1) {
-      this.blackTheme = true;
-    } else {
-      this.blackTheme = false;
+    // 学习页，背景变黑
+    this.blackTheme = this.$route.path.indexOf("/learn") !== -1 ? true : false;
+
+    let isLogIn = sessionStorage.getItem("user");
+    if (isLogIn) {
+      this.isLogIn = true;
     }
   },
   watch: {
@@ -108,7 +121,9 @@ export default {
       background: #5d5d5a;
     }
 
-    .userPoint {
+    .userPoint,
+    .logIn,
+    .register {
       width: 7rem;
       height: 2rem;
       line-height: 2rem;
@@ -122,13 +137,35 @@ export default {
       white-space: nowrap;
       cursor: pointer;
       transition: all 0.3s ease-in-out;
-
-      a {
-        color: #f5f5f5;
-      }
     }
     .userPoint:hover {
       background-color: #2f89fc;
+      box-shadow: 2px 4px 8px 0px rgba(46, 61, 73, 0.2);
+    }
+
+    .logIn {
+      width: 3.5rem;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      box-sizing: border-box;
+      background-color: rgba(256, 256, 256, 0.5);
+      color: #333;
+    }
+    .logIn:hover {
+      background-color: rgba(256, 256, 256, 1);
+      box-shadow: 2px 4px 8px 0px rgba(46, 61, 73, 0.2);
+    }
+
+    .register {
+      width: 3.5rem;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      box-sizing: border-box;
+      border-left: 1px solid rgba(256, 256, 256, 0.5);
+      background: #4892f1;
+    }
+    .register:hover {
+      background-color: #1f7ffd;
       box-shadow: 2px 4px 8px 0px rgba(46, 61, 73, 0.2);
     }
   }

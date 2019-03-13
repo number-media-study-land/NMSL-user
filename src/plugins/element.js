@@ -13,7 +13,9 @@ import {
   MenuItem,
   MenuItemGroup,
   RadioGroup,
-  RadioButton
+  RadioButton,
+  Form,
+  FormItem
 } from "element-ui";
 
 Vue.use(Input);
@@ -30,3 +32,5 @@ Vue.use(MenuItem);
 Vue.use(MenuItemGroup);
 Vue.use(RadioGroup);
 Vue.use(RadioButton);
+Vue.use(Form);
+Vue.use(FormItem);

@@ -5,6 +5,9 @@ import Coursemenu from "./views/coursemenu/Coursemenu.vue";
 import CourseDetail from "./views/coursedetail/CourseDetail.vue";
 import User from "./views/user/User.vue";
 import Learn from "./views/learn/Learn.vue";
+import LogIn from "./views/login_reg/LogIn.vue";
+import Register from "./views/login_reg/Register.vue";
+import Forget from "./views/login_reg/Forget.vue";
 
 Vue.use(Router);
 
@@ -16,6 +19,21 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: LogIn
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: Register
+    },
+    {
+      path: "/forget",
+      name: "forget",
+      component: Forget
     },
     {
       path: "/coursemenu",
