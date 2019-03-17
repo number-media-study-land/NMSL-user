@@ -41,7 +41,7 @@
               :disabled="isEmailReady"
               type="primary"
               class="forgetBtn"
-              @click="submitForm('forget')"
+              @click="register('forget')"
             >注册</el-button>
           </el-form-item>
         </el-form>
@@ -52,6 +52,8 @@
 
 <script>
 import GradationBg from "../../components/GradationBg";
+import axios from "@/utils/axios";
+import { users } from "@/utils/api";
 
 export default {
   name: "forget",
@@ -113,9 +115,9 @@ export default {
   },
   methods: {
     getCode() {
-      alert("code:1234");
+      // alert("code:1234");
     },
-    submitForm(formName) {
+    register(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           alert("submit!");

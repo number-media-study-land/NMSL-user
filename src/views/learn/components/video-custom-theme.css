@@ -131,10 +131,6 @@
     left: 0;
   }
   
-  .vjs-custom-skin > .video-js .vjs-control-bar .vjs-resolution-button .vjs-menu {
-     /*order: 4;*/
-  }
-  
    /*排序顺序*/
   .vjs-custom-skin > .video-js .vjs-control-bar .vjs-play-control {
     order: 0;

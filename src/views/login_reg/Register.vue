@@ -15,23 +15,27 @@
               autocomplete="off"
               :disabled="isEmailReady"
             >
-              <el-button slot="append" @click.prevent="getCode()" :disabled="isEmailReady">获取验证码</el-button>
+              <el-button
+                slot="append"
+                @click.prevent="getCode()"
+                :disabled="isEmailReady || isSendEmail"
+              >{{btnWord}}</el-button>
             </el-input>
           </el-form-item>
-          <el-form-item prop="pass">
+          <el-form-item prop="password">
             <el-input
               placeholder="密码"
               type="password"
-              v-model="register.pass"
+              v-model="register.password"
               autocomplete="off"
               :disabled="isEmailReady"
             ></el-input>
           </el-form-item>
-          <el-form-item prop="checkPass">
+          <el-form-item prop="checkPassword">
             <el-input
               placeholder="确认密码"
               type="password"
-              v-model="register.checkPass"
+              v-model="register.checkPassword"
               autocomplete="off"
               :disabled="isEmailReady"
             ></el-input>
@@ -59,7 +63,11 @@
 </template>
 
 <script>
+import md5 from "md5";
 import GradationBg from "../../components/GradationBg";
+import axios from "@/utils/axios";
+import { users } from "@/utils/api";
+import $salt from "@/utils/salt";
 
 export default {
   name: "register",
@@ -67,20 +75,20 @@ export default {
     GradationBg
   },
   data() {
-    const validatePass = (rule, value, callback) => {
+    const validatePassword = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
-        if (this.register.checkPass !== "") {
-          this.$refs.register.validateField("checkPass");
+        if (this.register.checkPassword !== "") {
+          this.$refs.register.validateField("checkPassword");
         }
         callback();
       }
     };
-    const validateCheckPass = (rule, value, callback) => {
+    const validateCheckPassword = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
-      } else if (value !== this.register.pass) {
+      } else if (value !== this.register.password) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
@@ -90,8 +98,8 @@ export default {
       register: {
         email: "",
         code: null,
-        pass: "",
-        checkPass: "",
+        password: "",
+        checkPassword: "",
         name: ""
       },
       rules: {
@@ -104,10 +112,12 @@ export default {
           }
         ],
         code: [{ required: true, message: "验证码不能为空", trigger: "blur" }],
-        pass: [{ validator: validatePass, trigger: "blur" }],
-        checkPass: [{ validator: validateCheckPass, trigger: "blur" }],
+        password: [{ validator: validatePassword, trigger: "blur" }],
+        checkPassword: [{ validator: validateCheckPassword, trigger: "blur" }],
         name: [{ required: true, message: "昵称不能为空", trigger: "blur" }]
-      }
+      },
+      isSendEmail: false,
+      btnWord: "获取验证码"
     };
   },
   computed: {
@@ -122,22 +132,53 @@ export default {
     }
   },
   methods: {
-    getCode() {
-      alert("code:1234");
+    async getCode() {
+      let data = await axios.post(users.verify, {
+        email: this.register.email
+      });
+      data = data.data;
+      if (data.code === 0) {
+        this.$message.success(data.msg);
+        this.isSendEmail = true;
+        this.btnWord = 60;
+        let timeLoop = setInterval(() => {
+          this.btnWord -= 1;
+          if (this.btnWord === 0) {
+            clearInterval(timeLoop);
+            this.isSendEmail = false;
+            this.btnWord = "获取验证码";
+          }
+        }, 1000);
+      } else {
+        this.$message.error(`错误：${data.msg}`);
+      }
     },
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
-          alert("submit!");
+          let params = JSON.parse(JSON.stringify(this.register));
+          delete params.checkPassword;
+          params.password = md5(params.password + $salt);
+          let data = await axios.post(users.register, params);
+          data = data.data;
+          if (data.code === 0) {
+            this.$message.success({
+              message: data.msg,
+              duration: 3000
+            });
+            this.$router.push("/login");
+          } else {
+            this.$message.error(`错误：${data.msg}`);
+          }
         } else {
-          console.log("error submit!!");
+          this.$message.error("错误：请确认每一项都填写正确");
           return false;
         }
       });
     }
   }
 };
-</script>
+</script>x
 
 <style lang="less" scoped>
 .register {

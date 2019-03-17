@@ -15,7 +15,8 @@ import {
   RadioGroup,
   RadioButton,
   Form,
-  FormItem
+  FormItem,
+  Message
 } from "element-ui";
 
 Vue.use(Input);
@@ -34,3 +35,4 @@ Vue.use(RadioGroup);
 Vue.use(RadioButton);
 Vue.use(Form);
 Vue.use(FormItem);
+Vue.prototype.$message = Message;
