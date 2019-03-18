@@ -51,9 +51,11 @@
 </template>
 
 <script>
+import md5 from "md5";
 import GradationBg from "../../components/GradationBg";
 import axios from "@/utils/axios";
 import { users } from "@/utils/api";
+import $salt from "@/utils/salt";
 
 export default {
   name: "forget",

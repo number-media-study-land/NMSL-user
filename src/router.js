@@ -7,7 +7,7 @@ import User from "./views/user/User.vue";
 import Learn from "./views/learn/Learn.vue";
 import LogIn from "./views/login_reg/LogIn.vue";
 import Register from "./views/login_reg/Register.vue";
-import Forget from "./views/login_reg/Forget.vue";
+// import Forget from "./views/login_reg/Forget.vue";
 
 Vue.use(Router);
 
@@ -30,11 +30,11 @@ export default new Router({
       name: "register",
       component: Register
     },
-    {
-      path: "/forget",
-      name: "forget",
-      component: Forget
-    },
+    // {
+    //   path: "/forget",
+    //   name: "forget",
+    //   component: Forget
+    // },
     {
       path: "/coursemenu",
       name: "coursemenu",

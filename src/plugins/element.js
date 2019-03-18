@@ -16,7 +16,8 @@ import {
   RadioButton,
   Form,
   FormItem,
-  Message
+  Message,
+  Popover
 } from "element-ui";
 
 Vue.use(Input);
@@ -35,4 +36,5 @@ Vue.use(RadioGroup);
 Vue.use(RadioButton);
 Vue.use(Form);
 Vue.use(FormItem);
+Vue.use(Popover);
 Vue.prototype.$message = Message;

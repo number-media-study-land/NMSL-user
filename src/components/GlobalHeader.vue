@@ -11,7 +11,7 @@
         </div>
         <div class="headerLine"></div>
 
-        <router-link :to="{ path: '/user' }" v-if="isLogIn">
+        <router-link :to="{ path: '/user' }" v-if="Xuser">
           <div class="userPoint">个人中心</div>
         </router-link>
 
@@ -29,35 +29,45 @@
 </template>
 
 <script>
+import { mapState,mapActions } from "vuex";
+import axios from "@/utils/axios";
+import { users } from "@/utils/api";
+
 export default {
   name: "GlobalHeader",
   components: {},
   data() {
     return {
-      blackTheme: false,
-      isLogIn: false
+      blackTheme: false
     };
   },
-  mounted() {
-    // 学习页，背景变黑
-    this.blackTheme = this.$route.path.indexOf("/learn") !== -1 ? true : false;
-
-    let isLogIn = sessionStorage.getItem("user");
-    if (isLogIn) {
-      this.isLogIn = true;
-    }
+  computed: {
+    ...mapState(["Xuser"])
   },
   watch: {
     $route: "getPath"
   },
   methods: {
+    ...mapActions(["changeXuser"]),
     getPath() {
       if (this.$route.path.indexOf("/learn") !== -1) {
         this.blackTheme = true;
       } else {
         this.blackTheme = false;
       }
+    },  
+    async getUser() {
+      let data = await axios.get(users.getUser);
+      data = data.data;
+      if (data.code === 0) {
+        this.changeXuser(data.data);
+      }
     }
+  },
+  mounted() {
+    // 学习页，背景变黑
+    this.blackTheme = this.$route.path.indexOf("/learn") !== -1 ? true : false;
+    this.getUser();
   }
 };
 </script>

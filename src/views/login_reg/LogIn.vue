@@ -6,8 +6,8 @@
       <div class="formBox">
         <el-input v-model="email" placeholder="邮箱" class="inputBox"></el-input>
         <el-input type="password" v-model="password" placeholder="密码"></el-input>
-        <el-button :disabled="!isCanEnter" type="primary" class="loginBtn">登录</el-button>
-        <p class="forget">
+        <el-button :disabled="!isCanEnter" type="primary" class="loginBtn" @click="login">登录</el-button>
+        <p class="forget" v-if="false">
           <router-link :to="{ path: '/forget' }">忘记密码?</router-link>
         </p>
       </div>
@@ -16,7 +16,12 @@
 </template>
 
 <script>
+import md5 from "md5";
+import { mapActions } from "vuex";
 import GradationBg from "../../components/GradationBg";
+import axios from "@/utils/axios";
+import { users } from "@/utils/api";
+import $salt from "@/utils/salt";
 
 export default {
   name: "login",
@@ -38,9 +43,27 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["changeXuser"]),
     isMailbox() {
       const reg = /\S+@\S+(\.\S)+/;
       return this.email.match(reg);
+    },
+    async login() {
+      let params = {};
+      params.email = this.email;
+      params.password = md5(this.password + $salt);
+      let data = await axios.post(users.login, params);
+      data = data.data;
+      if (data.code === 0) {
+        this.$message.success({
+          message: data.msg,
+          duration: 3000
+        });
+        this.changeXuser(data.data);
+        this.$router.push("/");
+      } else {
+        this.$message.error(`错误：${data.msg}`);
+      }
     }
   }
 };
