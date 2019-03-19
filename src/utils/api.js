@@ -5,3 +5,13 @@ export const users = {
   exit: "/users/exit",
   getUser: "/users/getUser"
 };
+
+export const home = {
+  newestCourse: "/newestCourse"
+};
+
+export const course = {
+  addCourse: "/course/addCourse",
+  courseDetail: "/course/courseDetail",
+  courseList: "/course/courseList"
+};

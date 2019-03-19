@@ -1,41 +1,43 @@
 <template>
   <div class="coursedetail">
     <div class="whiteBG"></div>
-    <section class="courseInfoBox">
+    <section class="courseInfoBox" v-if="courseInfo">
       <div class="courseInfo">
-        <h6 class="courseType">图像处理</h6>
-        <h1 class="courseTitle">学习灰度化处理</h1>
-        <p class="courseIntro">一门课让你学懂图像灰度化处理的课程</p>
-        <router-link :to="{ path: '/learn' }">
+        <h6 class="courseType">{{courseInfo.type}}</h6>
+        <h1 class="courseTitle">{{courseInfo.name}}</h1>
+        <p class="courseIntro">{{courseInfo.intro}}</p>
+        <router-link :to="{ path: `/learn/${courseInfo._id}` }">
           <div class="startStudyBtn">开始学习</div>
         </router-link>
       </div>
     </section>
-    <section class="courseAboutBox">
+    <section class="courseAboutBox" v-if="courseInfo">
       <div class="courseAbout">
         <h4 class="courseAboutTitle">关于此课程</h4>
         <p
           class="courseDesc"
-        >对于中等和较长开发周期，尤其是涉及多名开发人员参与的项目，开发人员能够有效地进行版本控制是非常重要和有益的。本课程由优达学城与 GitHub 共同制作，介绍进行版本控制的基础知识，重点讲解 Git 版本控制系统以及 GitHub 协作平台。</p>
+        >{{courseInfo.detail}}</p>
       </div>
       <div class="courseAbout">
         <div class="courseAboutMessage">
           <h5 class="messageTitle">学习时间</h5>
-          <h6 class="messageContent">大约 10 小时</h6>
+          <h6 class="messageContent">大约 {{courseInfo.time}} 小时</h6>
         </div>
         <div class="courseAboutMessage">
           <h5 class="messageTitle">学习难度</h5>
-          <h6 class="messageContent">初级</h6>
+          <h6 class="messageContent">{{courseInfo.level}}</h6>
         </div>
       </div>
     </section>
-    <section class="courseList">
+    <section class="courseList" v-if="courseInfo">
       <course-list-box/>
     </section>
   </div>
 </template>
 
 <script>
+import axios from "@/utils/axios";
+import { course } from "@/utils/api";
 import CourseListBox from "./components/CourseListBox";
 
 export default {
@@ -44,7 +46,24 @@ export default {
     CourseListBox
   },
   data() {
-    return {};
+    return {
+      courseInfo: null
+    };
+  },
+  methods: {
+    async getCourseInfo() {
+      let data = await axios.get(course.courseDetail,{ params: {_id: this.$route.params.courseId}})
+      data = data.data;
+      if (data.code === 0) {
+        this.courseInfo = data.data;
+      } else {
+        this.$message.error(`错误：${data.msg}, 已返回课程目录`, 3000);
+        this.$router.push("/coursemenu");
+      }
+    }
+  },
+  mounted() {
+    this.getCourseInfo()
   }
 };
 </script>
@@ -106,6 +125,7 @@ export default {
       }
 
       .startStudyBtn {
+        display: inline-block;
         width: 5rem;
         height: 2.5rem;
         line-height: 2.5rem;

@@ -41,7 +41,7 @@ export default new Router({
       component: Coursemenu
     },
     {
-      path: "/coursedetail",
+      path: "/coursedetail/:courseId",
       name: "coursedetail",
       component: CourseDetail
     },
@@ -51,7 +51,7 @@ export default new Router({
       component: User
     },
     {
-      path: "/learn",
+      path: "/learn/:courseId",
       name: "learn",
       component: Learn
     }

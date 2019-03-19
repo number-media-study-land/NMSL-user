@@ -4,15 +4,17 @@
       <search-menu/>
     </div>
     <div class="coursesContainer">
-      <courses-box/>
+      <courses-box :courseList="courseList" v-if="courseList.length !== 0" />
     </div>
     <div class="pagination">
-      <el-pagination background layout="prev, pager, next" :total="1"></el-pagination>
+      <el-pagination background layout="prev, pager, next" :total="total"></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "@/utils/axios";
+import { course } from "@/utils/api";
 import SearchMenu from "./components/SearchMenu";
 import CoursesBox from "./components/CoursesBox";
 
@@ -24,8 +26,27 @@ export default {
   },
   data() {
     return {
-      searchInput: ""
+      page: 1,
+      pageItem: 30,
+      total: 1,
+      searchInput: "",
+      courseList: [],
     };
+  },
+  methods: {
+    async getCourseList(state) {
+      let data = await axios.get(course.courseList, {
+        page: this.page,
+        pageItem: this.pageItem,
+        ...state
+      });
+      this.total = data.data.data.totalPage;
+      delete data.data.data.totalPage;
+      this.courseList = data.data.data;
+    }
+  },
+  mounted() {
+    this.getCourseList({});
   }
 };
 </script>

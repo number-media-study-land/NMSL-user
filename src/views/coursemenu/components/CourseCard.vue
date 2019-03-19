@@ -1,14 +1,14 @@
 <template>
   <div class="courseCard">
-    <router-link :to="{ path: '/courseDetail' }">
+    <router-link :to="{ path: `/courseDetail${courseIntro._id}` }">
       <div class="cardImg">
-        <img src="https://img.mukewang.com/5c60f2e80984689c05400300-240-135.jpg" alt>
-        <span class="courseTig">图像处理</span>
+        <img :src="courseIntro.cover" alt>
+        <span class="courseTig">{{courseIntro.type}}</span>
       </div>
       <div class="cardInfo">
-        <h3 class="cardTitle">学习灰度化处理</h3>
-        <span class="cardLevel">初级</span>
-        <p class="cardDesc">一门课让你学懂图像灰度化处理的课程</p>
+        <h3 class="cardTitle">{{courseIntro.name}}</h3>
+        <span class="cardLevel">{{courseIntro.level}}</span>
+        <p class="cardDesc">{{courseIntro.intro}}</p>
       </div>
     </router-link>
   </div>
@@ -17,10 +17,7 @@
 <script>
 export default {
   name: "courseCard",
-  components: {},
-  data() {
-    return {};
-  }
+  props: ["courseIntro"]
 };
 </script>
 
