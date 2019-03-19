@@ -1,6 +1,6 @@
 <template>
   <div class="courseCard">
-    <router-link :to="{ path: `/courseDetail${courseIntro._id}` }">
+    <router-link :to="{ path: `/courseDetail/${courseIntro._id}` }">
       <div class="cardImg">
         <img :src="courseIntro.cover" alt>
         <span class="courseTig">{{courseIntro.type}}</span>
