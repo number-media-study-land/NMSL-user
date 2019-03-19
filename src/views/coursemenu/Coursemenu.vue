@@ -4,7 +4,7 @@
       <search-menu/>
     </div>
     <div class="coursesContainer">
-      <courses-box :courseList="courseList" v-if="courseList.length !== 0" />
+      <courses-box :courseList="courseList" v-if="courseList.length !== 0"/>
     </div>
     <div class="pagination">
       <el-pagination background layout="prev, pager, next" :total="total"></el-pagination>
@@ -30,7 +30,7 @@ export default {
       pageItem: 30,
       total: 1,
       searchInput: "",
-      courseList: [],
+      courseList: []
     };
   },
   methods: {

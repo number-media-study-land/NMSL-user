@@ -14,9 +14,7 @@
     <section class="courseAboutBox" v-if="courseInfo">
       <div class="courseAbout">
         <h4 class="courseAboutTitle">关于此课程</h4>
-        <p
-          class="courseDesc"
-        >{{courseInfo.detail}}</p>
+        <p class="courseDesc">{{courseInfo.detail}}</p>
       </div>
       <div class="courseAbout">
         <div class="courseAboutMessage">
@@ -52,7 +50,9 @@ export default {
   },
   methods: {
     async getCourseInfo() {
-      let data = await axios.get(course.courseDetail,{ params: {_id: this.$route.params.courseId}})
+      let data = await axios.get(course.courseDetail, {
+        params: { _id: this.$route.params.courseId }
+      });
       data = data.data;
       if (data.code === 0) {
         this.courseInfo = data.data;
@@ -63,7 +63,7 @@ export default {
     }
   },
   mounted() {
-    this.getCourseInfo()
+    this.getCourseInfo();
   }
 };
 </script>

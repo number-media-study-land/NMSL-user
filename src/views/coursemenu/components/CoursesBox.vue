@@ -1,6 +1,6 @@
 <template>
   <div class="coursesBox clear-float">
-    <course-card v-for="item in courseList" :key="item._id" :courseIntro="item" />
+    <course-card v-for="item in courseList" :key="item._id" :courseIntro="item"/>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   components: {
     CourseCard
   },
-  props: ['courseList'],
+  props: ["courseList"],
   data() {
     return {};
   }
