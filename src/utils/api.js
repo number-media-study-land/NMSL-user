@@ -11,8 +11,13 @@ export const home = {
 };
 
 export const course = {
-  addCourse: "/course/addCourse",
   courseDetail: "/course/courseDetail",
   courseList: "/course/courseList",
-  searchCourse: "/course/searchCourse"
+  searchCourse: "/course/searchCourse",
+  courseVideoList: "/course/courseVideoList"
+};
+
+export const mm = {
+  addCourse: "/manage/course/addCourse",
+  addCourseVideo: "/manage/course/addCourseVideo"
 };

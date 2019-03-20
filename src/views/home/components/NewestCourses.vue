@@ -25,7 +25,7 @@
 
 <script>
 import axios from "@/utils/axios";
-import { home } from "@/utils/api";
+import { home, mm } from "@/utils/api";
 
 export default {
   name: "NewestCourses",
@@ -38,6 +38,48 @@ export default {
   methods: {
     async getNewestCourse() {
       let res = await axios.get(home.newestCourse);
+
+      /* let aaa = await axios.post(mm.addCourseVideo, {
+        name: "灰度值学习",
+        videoList: [
+          {
+            title: "课程简介",
+            list: [
+              {
+                title: "课程简介",
+                src:
+                  "https://s3.cn-north-1.amazonaws.com.cn/u-vid-hd/1Pxj9955I2c.mp4"
+              },
+              {
+                title: "为什么要学习灰度值",
+                src:
+                  "https://s3.cn-north-1.amazonaws.com.cn/u-vid-hd/VmqRfdE3Gv0.mp4"
+              }
+            ]
+          },
+          {
+            title: "灰度值的基本知识",
+            list: [
+              {
+                title: "什么是灰度值",
+                src:
+                  "https://s3.cn-north-1.amazonaws.com.cn/u-vid-hd/yzzLtEHZ10E.mp4"
+              },
+              {
+                title: "如何计算灰度值",
+                src:
+                  "https://s3.cn-north-1.amazonaws.com.cn/u-vid-hd/D9_9P7qhRtQ.mp4"
+              },
+              {
+                title: "灰度值应用于何处",
+                src:
+                  "https://s3.cn-north-1.amazonaws.com.cn/u-vid-hd/uNZYNw4F5DU.mp4"
+              }
+            ]
+          }
+        ]
+      }); */
+
       this.courseList = res.data.data;
     }
   },

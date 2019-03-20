@@ -4,59 +4,18 @@
       <div class="left">
         <div class="leftBox" :class="{ hideLeft: isHidden }">
           <div class="leftTitle">课程目录</div>
-          <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-            <el-submenu index="1">
+          <el-menu default-active="1-1" class="el-menu-vertical-demo">
+            <el-submenu v-for="(item, index) in videoList" :key="item.title" :index="`${index+1}`">
               <template slot="title">
-                <span slot="title">第一章 课程简介</span>
+                <span slot="title">第{{index+1}}章 {{item.title}}</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="1-1">1-1 课程简介</el-menu-item>
-                <el-menu-item index="1-2">1-2 课程导学</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <span slot="title">第二章 课程简介</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="2-1">2-1 课程简介</el-menu-item>
-                <el-menu-item index="2-2">2-2 课程导学</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <span slot="title">第二章 课程简介</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="2-1">2-1 课程简介</el-menu-item>
-                <el-menu-item index="2-2">2-2 课程导学</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <span slot="title">第二章 课程简介</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="2-1">2-1 课程简介</el-menu-item>
-                <el-menu-item index="2-2">2-2 课程导学</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <span slot="title">第二章 课程简介</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="2-1">2-1 课程简介</el-menu-item>
-                <el-menu-item index="2-2">2-2 课程导学</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <span slot="title">第二章 课程简介</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="2-1">2-1 课程简介</el-menu-item>
-                <el-menu-item index="2-2">2-2 课程导学</el-menu-item>
+                <el-menu-item
+                  v-for="(video, vindex) in item.list"
+                  :key="video.title"
+                  :index="`${index+1}-${vindex+1}`"
+                  @click="choseVideo(video)"
+                >{{index+1}}-{{vindex+1}} {{video.title}}</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
           </el-menu>
@@ -67,9 +26,9 @@
           <section class="videoWrapper">
             <header class="videoHead">
               <i class="el-icon-menu" @click="foldMenu"></i>
-              <h2 class="videoHeadTitle">课程简介</h2>
+              <h2 class="videoHeadTitle">{{studyVideo.title || null}}</h2>
             </header>
-            <video-box/>
+            <video-box :studyVideo="studyVideo"/>
           </section>
         </main>
       </div>
@@ -78,6 +37,8 @@
 </template>
 
 <script>
+import axios from "@/utils/axios";
+import { course } from "@/utils/api";
 import VideoBox from "./components/VideoBox";
 
 export default {
@@ -87,19 +48,40 @@ export default {
   },
   data() {
     return {
-      isHidden: false
+      isHidden: false,
+      videoList: [],
+      studyVideo: {}
     };
   },
   methods: {
     foldMenu() {
       this.isHidden = !this.isHidden;
     },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+    choseVideo(videoData) {
+      this.studyVideo = videoData;
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    async getVideoList(id) {
+      let courseList = await axios.get(course.courseVideoList, {
+        params: {
+          _id: id
+        }
+      });
+      let data = courseList.data;
+      if (data.code === 0) {
+        this.videoList = data.data.videoList;
+        this.studyVideo = data.data.videoList[0].list[0];
+      } else {
+        this.$message.error({
+          message: data.msg,
+          duration: 7000
+        });
+        this.$router.push("/coursemenu");
+      }
     }
+  },
+  mounted() {
+    let { courseId } = this.$route.params;
+    this.getVideoList(courseId);
   }
 };
 </script>

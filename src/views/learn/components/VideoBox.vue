@@ -18,28 +18,29 @@ import "./video-custom-theme.css";
 
 export default {
   name: "videoBox",
+  props: ["studyVideo"],
   components: {
     videoPlayer
   },
   data() {
     return {
-      // videojs options
       playerOptions: {
-        // height: '500vh',
         fill: true,
         playbackRates: [0.7, 1.0, 1.5, 2.0],
         sources: [
           {
             type: "video/mp4",
-            src:
-              "https://s3.cn-north-1.amazonaws.com.cn/u-vid-hd/VmqRfdE3Gv0.mp4"
+            src: ""
           }
         ]
       }
     };
   },
-  mounted() {},
-  computed: {},
+  watch: {
+    studyVideo(newVal) {
+      this.playerOptions.sources[0].src = newVal.src;
+    }
+  },
   methods: {}
 };
 </script>
