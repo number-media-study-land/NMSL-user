@@ -5,7 +5,7 @@
       <h2 class="title">所有课程</h2>
       <div class="inputBox">
         <el-input v-model="searchInput" placeholder="搜索感兴趣的课程">
-          <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="inputSearch"></el-button>
         </el-input>
       </div>
     </div>
@@ -13,22 +13,22 @@
       <div class="coursesType clear-float">
         <span class="typeTitle">分类：</span>
         <div class="typeButtonBox">
-          <ul>
-            <li class="typeButton menuActive">全部</li>
-            <li class="typeButton">图像处理</li>
-            <li class="typeButton">音频处理</li>
+          <ul @click="typeSearch($event)">
+            <li class="typeButton" :class="typeSelect==='全部' && 'menuActive'">全部</li>
+            <li class="typeButton" :class="typeSelect==='图像处理' && 'menuActive'">图像处理</li>
+            <li class="typeButton" :class="typeSelect==='音频处理' && 'menuActive'">音频处理</li>
           </ul>
         </div>
       </div>
       <div class="coursesType border-none clear-float">
         <span class="typeTitle">难度：</span>
         <div class="typeButtonBox">
-          <ul>
-            <li class="typeButton menuActive">全部</li>
-            <li class="typeButton">入门</li>
-            <li class="typeButton">初级</li>
-            <li class="typeButton">中级</li>
-            <li class="typeButton">高级</li>
+          <ul @click="levelSearch($event)">
+            <li class="typeButton" :class="levelSelect==='全部' && 'menuActive'">全部</li>
+            <li class="typeButton" :class="levelSelect==='入门' && 'menuActive'">入门</li>
+            <li class="typeButton" :class="levelSelect==='初级' && 'menuActive'">初级</li>
+            <li class="typeButton" :class="levelSelect==='中级' && 'menuActive'">中级</li>
+            <li class="typeButton" :class="levelSelect==='高级' && 'menuActive'">高级</li>
           </ul>
         </div>
       </div>
@@ -42,8 +42,60 @@ export default {
   components: {},
   data() {
     return {
+      typeSelect: "全部",
+      levelSelect: "全部",
       searchInput: ""
     };
+  },
+  methods: {
+    async typeSearch(event) {
+      if (event.target.nodeName === "LI") {
+        let typeValue = event.target.innerText;
+        if (typeValue !== this.typeSelect) {
+          this.typeSelect = typeValue;
+          let params = {};
+          if (typeValue !== "全部") {
+            params.type = typeValue;
+          }
+          if (this.levelSelect !== "全部") {
+            params.level = this.levelSelect;
+          }
+          this.searchInput = "";
+          this.$emit("btnSearch", params);
+        }
+      }
+    },
+    async levelSearch(event) {
+      if (event.target.nodeName === "LI") {
+        let levelSelect = event.target.innerText;
+        if (levelSelect !== this.levelSelect) {
+          this.levelSelect = levelSelect;
+          let params = {};
+          if (this.typeSelect !== "全部") {
+            params.type = this.typeSelect;
+          }
+          if (levelSelect !== "全部") {
+            params.level = levelSelect;
+          }
+          this.searchInput = "";
+          this.$emit("btnSearch", params);
+        }
+      }
+    },
+    async inputSearch() {
+      if (this.searchInput !== "") {
+        let params = {};
+        params.name = this.searchInput;
+        this.typeSelect = "全部";
+        this.levelSelect = "全部";
+        this.$emit("inpurSearch", params);
+      } else {
+        this.$message.error({
+          message: "搜索内容不能为空",
+          duration: 3000
+        });
+      }
+    }
   }
 };
 </script>

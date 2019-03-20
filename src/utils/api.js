@@ -13,5 +13,6 @@ export const home = {
 export const course = {
   addCourse: "/course/addCourse",
   courseDetail: "/course/courseDetail",
-  courseList: "/course/courseList"
+  courseList: "/course/courseList",
+  searchCourse: "/course/searchCourse"
 };

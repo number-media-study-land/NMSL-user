@@ -1,10 +1,11 @@
 <template>
   <div class="coursemenu">
     <div class="courseChoseMenu">
-      <search-menu/>
+      <search-menu @btnSearch="btnSearch" @inpurSearch="inpurSearch"/>
     </div>
     <div class="coursesContainer">
       <courses-box :courseList="courseList" v-if="courseList.length !== 0"/>
+      <div v-else>暂无相关课程</div>
     </div>
     <div class="pagination">
       <el-pagination background layout="prev, pager, next" :total="total"></el-pagination>
@@ -34,19 +35,38 @@ export default {
     };
   },
   methods: {
-    async getCourseList(state) {
+    async getCourseList(state, page, pageItem) {
       let data = await axios.get(course.courseList, {
-        page: this.page,
-        pageItem: this.pageItem,
-        ...state
+        params: {
+          page,
+          pageItem,
+          ...state
+        }
       });
+      this.page = page;
+      this.pageItem = pageItem;
       this.total = data.data.data.totalPage;
-      delete data.data.data.totalPage;
-      this.courseList = data.data.data;
+      this.courseList = data.data.data.list;
+    },
+    btnSearch(value) {
+      this.getCourseList(value, 1, 30);
+    },
+    async inpurSearch(value, page = 1, pageItem = 30) {
+      let data = await axios.get(course.searchCourse, {
+        params: {
+          page,
+          pageItem,
+          ...value
+        }
+      });
+      this.page = page;
+      this.pageItem = pageItem;
+      this.total = data.data.data.totalPage;
+      this.courseList = data.data.data.list;
     }
   },
   mounted() {
-    this.getCourseList({});
+    this.getCourseList({}, 1, 30);
   }
 };
 </script>
