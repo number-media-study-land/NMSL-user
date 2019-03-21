@@ -3,12 +3,12 @@
     <div class="userInfoBox">
       <div class="BgImg">
         <img
-          src="https://smx-1253369066.cos.ap-chengdu.myqcloud.com/userBG.jpg?q-sign-algorithm=sha1&q-ak=AKIDoBy5hyu2GzMu7jvP2GPRiUO0RAmBxqxW&q-sign-time=1552908852;1552910652&q-key-time=1552908852;1552910652&q-header-list=&q-url-param-list=&q-signature=4fc85bde18ce17a4dca074251a20e52100e10122&x-cos-security-token=b825c3aea7ce97671b808757e184ad493c5452ff10001"
+          src="https://smx-1253369066.cos.ap-chengdu.myqcloud.com/userBG.jpg?q-sign-algorithm=sha1&q-ak=AKID9huR5PYBJQMOj0HRMOABT5BsgEpysVSt&q-sign-time=1553150962;1553152762&q-key-time=1553150962;1553152762&q-header-list=&q-url-param-list=&q-signature=059ad4e52080505b6e7896715d8cad82207f477f&x-cos-security-token=d9015b1baf73d1b9dda149cbcbc14898b893b73210001"
           alt
         >
       </div>
-      <div class="userInfo">
-        <div class="userName">{{Xuser.name || '未登录'}}</div>
+      <div class="userInfo" v-if="Xuser">
+        <div class="userName">{{Xuser.name}}</div>
         <el-button type="info" plain class="logOutBtn" @click="logOut">退出登录</el-button>
       </div>
     </div>
@@ -42,7 +42,7 @@ export default {
           message: data.msg,
           duration: 3000
         });
-        this.changeXuser({});
+        this.changeXuser(null);
         this.$router.push("/login");
       } else {
         this.$message.error(`错误：${data.msg}`);
@@ -50,9 +50,12 @@ export default {
     }
   },
   mounted() {
-    if (JSON.stringify(this.Xuser) === "{}") {
-      this.$router.push("/login");
-    }
+    setTimeout(() => {
+      if (!this.Xuser) {
+        this.$message.error(`请登录账号`, 3000);
+        this.$router.push("/login");
+      }
+    }, 0);
   }
 };
 </script>

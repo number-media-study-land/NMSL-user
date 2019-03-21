@@ -1,10 +1,13 @@
 <template>
   <div class="courseListBox">
     <h4 class="ListTitle">你将学到什么</h4>
-    <section class="chapter">
-      <chapter-box/>
-      <chapter-box/>
-      <chapter-box/>
+    <section class="chapter" v-if="courseVideoMenu.length !== 0">
+      <chapter-box
+        v-for="(item, index) in courseVideoMenu"
+        :key="item.title"
+        :chapterInfo="item"
+        :chapterIndex="index"
+      />
     </section>
   </div>
 </template>
@@ -14,11 +17,9 @@ import ChapterBox from "./ChapterBox";
 
 export default {
   name: "courseListBox",
+  props: ["courseVideoMenu"],
   components: {
     ChapterBox
-  },
-  data() {
-    return {};
   }
 };
 </script>

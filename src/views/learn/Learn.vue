@@ -38,6 +38,7 @@
 
 <script>
 import axios from "@/utils/axios";
+import { mapState } from "vuex";
 import { course } from "@/utils/api";
 import VideoBox from "./components/VideoBox";
 
@@ -45,6 +46,9 @@ export default {
   name: "learn",
   components: {
     VideoBox
+  },
+  computed: {
+    ...mapState(["Xuser"])
   },
   data() {
     return {
@@ -72,16 +76,24 @@ export default {
         this.studyVideo = data.data.videoList[0].list[0];
       } else {
         this.$message.error({
-          message: data.msg,
+          message: `错误：${data.msg}，已返回课程目录`,
           duration: 7000
         });
-        this.$router.push("/coursemenu");
+        setTimeout(() => {
+          this.$router.push("/coursemenu");
+        }, 1000);
       }
     }
   },
   mounted() {
-    let { courseId } = this.$route.params;
-    this.getVideoList(courseId);
+    if (!this.Xuser) {
+      this.$message.error(`请登录账号`, 3000);
+      this.$router.push("/login");
+    } else {
+      let { courseId } = this.$route.params;
+      this.getVideoList(courseId);
+    }
+
   }
 };
 </script>

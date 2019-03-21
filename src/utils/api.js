@@ -12,6 +12,7 @@ export const home = {
 
 export const course = {
   courseDetail: "/course/courseDetail",
+  courseDetailVideoMenu: "/course/courseDetailVideoMenu",
   courseList: "/course/courseList",
   searchCourse: "/course/searchCourse",
   courseVideoList: "/course/courseVideoList"

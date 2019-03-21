@@ -28,7 +28,7 @@
       </div>
     </section>
     <section class="courseList" v-if="courseInfo">
-      <course-list-box/>
+      <course-list-box :courseVideoMenu="courseVideoMenu"/>
     </section>
   </div>
 </template>
@@ -45,7 +45,8 @@ export default {
   },
   data() {
     return {
-      courseInfo: null
+      courseInfo: null,
+      courseVideoMenu: []
     };
   },
   methods: {
@@ -56,9 +57,29 @@ export default {
       data = data.data;
       if (data.code === 0) {
         this.courseInfo = data.data;
+        this.getCourseVideoInfo(data.data.name)
       } else {
-        this.$message.error(`错误：${data.msg}, 已返回课程目录`, 3000);
-        this.$router.push("/coursemenu");
+        this.$message.error(`错误：${data.msg}，已返回课程目录`, 3000);
+        setTimeout(() => {
+          this.$router.push("/coursemenu");
+        }, 1000);
+      }
+    },
+    async getCourseVideoInfo(name) {
+      let data = await axios.get(course.courseDetailVideoMenu, {
+        params: { name }
+      });
+      data = data.data;
+      if (data.code === 0) {
+        this.courseVideoMenu = data.data.videoList;
+      } else {
+        this.$message.error({
+          message: `错误：${data.msg}，已返回课程目录`,
+          duration: 7000
+        });
+        setTimeout(() => {
+          this.$router.push("/coursemenu");
+        }, 1000);
       }
     }
   },

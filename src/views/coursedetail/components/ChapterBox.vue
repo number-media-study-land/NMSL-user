@@ -1,15 +1,15 @@
 <template>
   <div class="ChapterBox">
     <div class="chapterTitleBox">
-      <h6 class="chapterNumber">第1章</h6>
-      <h2 class="chapterTitle">课程简介</h2>
+      <h6 class="chapterNumber">第{{chapterIndex+1}}章</h6>
+      <h2 class="chapterTitle">{{chapterInfo.title}}</h2>
     </div>
     <div class="chapterContentBox">
       <ul>
-        <li>
+        <li v-for="(video,index) in chapterInfo.list" :key="video.title">
           <img class="playIcon" src="@/assets/play.svg" alt="播放">
-          <span>1-1</span>
-          课程简介
+          <span>{{chapterIndex+1}}-{{index+1}}</span>
+          &nbsp;{{video.title}}
         </li>
       </ul>
     </div>
@@ -19,10 +19,7 @@
 <script>
 export default {
   name: "ChapterBox",
-  components: {},
-  data() {
-    return {};
-  }
+  props: ["chapterInfo","chapterIndex"]
 };
 </script>
 
@@ -74,7 +71,11 @@ export default {
 
     li {
       display: flex;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(221, 221, 221, .5);
+      margin-bottom: 15px;
       align-items: center;
+      font-size: 18px;
 
       .playIcon {
         height: 24px;
