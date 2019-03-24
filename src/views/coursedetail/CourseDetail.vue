@@ -6,7 +6,9 @@
         <h6 class="courseType">{{courseInfo.type}}</h6>
         <h1 class="courseTitle">{{courseInfo.name}}</h1>
         <p class="courseIntro">{{courseInfo.intro}}</p>
-        <router-link :to="{ path: `/learn/${courseInfo._id}` }">
+        <router-link
+          :to="{ name: 'learn', params: {courseId: courseInfo._id}}"
+        >
           <div class="startStudyBtn">开始学习</div>
         </router-link>
       </div>
@@ -57,7 +59,7 @@ export default {
       data = data.data;
       if (data.code === 0) {
         this.courseInfo = data.data;
-        this.getCourseVideoInfo(data.data.name)
+        this.getCourseVideoInfo(data.data.name);
       } else {
         this.$message.error(`错误：${data.msg}，已返回课程目录`, 3000);
         setTimeout(() => {

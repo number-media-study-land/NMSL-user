@@ -133,22 +133,22 @@ export default {
   },
   methods: {
     async getCode() {
+      this.isSendEmail = true;
+      this.btnWord = 60;
+      let timeLoop = setInterval(() => {
+        this.btnWord -= 1;
+        if (this.btnWord === 0) {
+          clearInterval(timeLoop);
+          this.isSendEmail = false;
+          this.btnWord = "获取验证码";
+        }
+      }, 1000);
       let data = await axios.post(users.verify, {
         email: this.register.email
       });
       data = data.data;
       if (data.code === 0) {
         this.$message.success(data.msg);
-        this.isSendEmail = true;
-        this.btnWord = 60;
-        let timeLoop = setInterval(() => {
-          this.btnWord -= 1;
-          if (this.btnWord === 0) {
-            clearInterval(timeLoop);
-            this.isSendEmail = false;
-            this.btnWord = "获取验证码";
-          }
-        }, 1000);
       } else {
         this.$message.error(`错误：${data.msg}`);
       }

@@ -41,7 +41,9 @@ export default {
       this.playerOptions.sources[0].src = newVal.src;
     }
   },
-  methods: {}
+  mounted() {
+    this.playerOptions.sources[0].src = this.studyVideo.src;
+  }
 };
 </script>
 

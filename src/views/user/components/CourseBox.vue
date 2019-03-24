@@ -1,11 +1,15 @@
 <template>
   <div class="courseBox">
     <div class="courseContent">
-      <img src="https://img.mukewang.com/5c60f2e80984689c05400300-240-135.jpg" alt>
+      <img :src="courseInfo.cover" alt>
       <div class="learnInfo">
-        <h3>学习灰度化处理</h3>
-        <p>学习至1-1 课程简介</p>
-        <div class="studyBtn">继续学习</div>
+        <h3>{{courseInfo.name}}</h3>
+        <p>学习至{{courseInfo.progress[0]}}-{{courseInfo.progress[1]}} {{courseInfo.progressName}}</p>
+        <router-link
+          :to="{ name: 'learn', params: {courseId: courseInfo.courseId}}"
+        >
+          <div class="studyBtn">继续学习</div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -14,6 +18,7 @@
 <script>
 export default {
   name: "courseBox",
+  props: ["courseInfo"],
   components: {}
 };
 </script>

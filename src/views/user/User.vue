@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="userLearnBox">
-      <learn-box/>
+      <learn-box v-if="Xuser" :userInfo="Xuser"/>
     </div>
   </div>
 </template>

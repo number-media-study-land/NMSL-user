@@ -3,12 +3,10 @@
     <div class="userLearnTitle">
       <span class="userLearnActive">学习课程</span>
     </div>
-    <div class="courseContent">
-      <course-box/>
-      <course-box/>
-      <course-box/>
-      <course-box/>
+    <div class="courseContent" v-if="learnList.length !== 0">
+      <course-box v-for="item in learnList" :key="item.title" :courseInfo="item"/>
     </div>
+    <div v-else class="noClass">还没有学习的课程</div>
     <div class="pagination">
       <el-pagination background layout="prev, pager, next" :total="1"></el-pagination>
     </div>
@@ -16,12 +14,38 @@
 </template>
 
 <script>
+import axios from "@/utils/axios";
+import { userStudy } from "@/utils/api";
 import CourseBox from "./CourseBox.vue";
 
 export default {
   name: "learnBox",
+  props: ["userInfo"],
   components: {
     CourseBox
+  },
+  data() {
+    return {
+      page: 1,
+      pageItem: 20,
+      learnList: []
+    };
+  },
+  methods: {
+    async getLearnList() {
+      let data = await axios.get(userStudy.userStudyList, {
+        params: {
+          userId: this.userInfo._id
+        }
+      });
+      data = data.data;
+      if (data.code === 0) {
+        this.learnList = data.data;
+      }
+    }
+  },
+  mounted() {
+    this.getLearnList();
   }
 };
 </script>
@@ -45,6 +69,12 @@ export default {
       margin-right: 53px;
       color: #2f89fc;
     }
+  }
+
+  .noClass {
+    margin: 50px 0;
+    text-align: center;
+    font-size: 20px;
   }
 
   .pagination {
