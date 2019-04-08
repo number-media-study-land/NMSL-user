@@ -14,7 +14,6 @@ export const course = {
   courseDetail: "/course/courseDetail",
   courseDetailVideoMenu: "/course/courseDetailVideoMenu",
   courseList: "/course/courseList",
-  searchCourse: "/course/searchCourse",
   courseVideoList: "/course/courseVideoList"
 };
 
@@ -22,9 +21,4 @@ export const userStudy = {
   userStudyList: "/userStudy/userStudyList",
   courseInUser: "/userStudy/courseInUser",
   updateProgress: "/userStudy/updateProgress"
-};
-
-export const mm = {
-  addCourse: "/manage/course/addCourse",
-  addCourseVideo: "/manage/course/addCourseVideo"
 };

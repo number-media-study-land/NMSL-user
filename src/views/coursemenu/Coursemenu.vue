@@ -52,7 +52,7 @@ export default {
       this.getCourseList(value, 1, 30);
     },
     async inpurSearch(value, page = 1, pageItem = 30) {
-      let data = await axios.get(course.searchCourse, {
+      let data = await axios.get(course.courseList, {
         params: {
           page,
           pageItem,

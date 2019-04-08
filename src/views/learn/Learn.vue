@@ -4,7 +4,10 @@
       <div class="left">
         <div class="leftBox" :class="{ hideLeft: isHidden }">
           <div class="leftTitle">课程目录</div>
-          <el-menu :default-active="`${studyProgress[0]}-${studyProgress[1]}`" class="el-menu-vertical-demo">
+          <el-menu
+            :default-active="`${studyProgress[0]}-${studyProgress[1]}`"
+            class="el-menu-vertical-demo"
+          >
             <el-submenu v-for="(item, index) in videoList" :key="item.title" :index="`${index+1}`">
               <template slot="title">
                 <span slot="title">第{{index+1}}章 {{item.title}}</span>
@@ -16,7 +19,12 @@
                   :index="`${index+1}-${vindex+1}`"
                   @click="choseVideo(video, [index+1, vindex+1])"
                 >
-                  <img src="@/assets/ok.svg" alt="" class="okSVG" v-if="!handleProgress([index+1, vindex+1])">
+                  <img
+                    src="@/assets/ok.svg"
+                    alt
+                    class="okSVG"
+                    v-if="!handleProgress([index+1, vindex+1])"
+                  >
                   {{index+1}}-{{vindex+1}} {{video.title}}
                 </el-menu-item>
               </el-menu-item-group>
@@ -58,7 +66,7 @@ export default {
       isHidden: false,
       videoList: [],
       studyVideo: null,
-      studyProgress: null,
+      studyProgress: null
     };
   },
   methods: {
@@ -72,7 +80,7 @@ export default {
 
       if (this.handleProgress(progress)) {
         // 更新学习进度
-        let courseList = await axios.post(userStudy.updateProgress, {
+        await axios.post(userStudy.updateProgress, {
           courseId: this.$route.params.courseId,
           userId: this.Xuser._id,
           progress,
@@ -84,7 +92,10 @@ export default {
     handleProgress(progress) {
       if (progress[0] > this.studyProgress[0]) {
         return true;
-      } else if (progress[0] >= this.studyProgress[0] && progress[1] > this.studyProgress[1]) {
+      } else if (
+        progress[0] >= this.studyProgress[0] &&
+        progress[1] > this.studyProgress[1]
+      ) {
         return true;
       } else {
         return false;
@@ -100,7 +111,10 @@ export default {
       let data = courseList.data;
       if (data.code === 0) {
         this.videoList = data.data.videoList;
-        this.studyVideo = data.data.videoList[this.studyProgress[0]-1].list[this.studyProgress[1]-1];
+        this.studyVideo =
+          data.data.videoList[this.studyProgress[0] - 1].list[
+            this.studyProgress[1] - 1
+          ];
       } else {
         this.$message.error({
           message: `错误：${data.msg}，已返回课程目录`,
@@ -121,7 +135,7 @@ export default {
       if (data !== null) {
         this.studyProgress = data.studyList[0].progress;
       } else {
-        this.studyProgress = [1,1]
+        this.studyProgress = [1, 1];
       }
       this.getVideoList(courseId);
     }
@@ -168,7 +182,7 @@ export default {
       border: 0;
     }
 
-    .okSVG{
+    .okSVG {
       position: absolute;
       top: 15px;
       left: 5px;
