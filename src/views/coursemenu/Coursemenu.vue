@@ -1,14 +1,19 @@
 <template>
   <div class="coursemenu">
     <div class="courseChoseMenu">
-      <search-menu @btnSearch="btnSearch" @inpurSearch="inpurSearch"/>
+      <search-menu @search="search"/>
     </div>
     <div class="coursesContainer">
       <courses-box :courseList="courseList" v-if="courseList.length !== 0"/>
       <div v-else>暂无相关课程</div>
     </div>
     <div class="pagination">
-      <el-pagination background layout="prev, pager, next" :total="total"></el-pagination>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        @current-change="changePage"
+        :total="total"
+      ></el-pagination>
     </div>
   </div>
 </template>
@@ -27,46 +32,42 @@ export default {
   },
   data() {
     return {
-      page: 1,
-      pageItem: 30,
-      total: 1,
-      searchInput: "",
+      pageInfo: {
+        page: 1,
+        pageItem: 30
+      },
+      total: 10,
+      searchInfo: {},
       courseList: []
     };
   },
   methods: {
-    async getCourseList(state, page, pageItem) {
+    async getCourseList(params) {
       let data = await axios.get(course.courseList, {
         params: {
-          page,
-          pageItem,
-          ...state
+          ...this.pageInfo,
+          ...params
         }
       });
-      this.page = page;
-      this.pageItem = pageItem;
-      this.total = data.data.data.totalPage;
+      this.total = data.data.data.totalPage * 10;
       this.courseList = data.data.data.list;
     },
-    btnSearch(value) {
-      this.getCourseList(value, 1, 30);
+    search(value) {
+      this.pageInfo = {
+        page: 1,
+        pageItem: 30
+      };
+      this.searchInfo = value;
+      this.getCourseList(value);
     },
-    async inpurSearch(value, page = 1, pageItem = 30) {
-      let data = await axios.get(course.courseList, {
-        params: {
-          page,
-          pageItem,
-          ...value
-        }
-      });
-      this.page = page;
-      this.pageItem = pageItem;
-      this.total = data.data.data.totalPage;
-      this.courseList = data.data.data.list;
+    // 分页
+    changePage(nowPage) {
+      this.pageInfo.page = nowPage;
+      this.getCourseList(this.searchInfo);
     }
   },
   mounted() {
-    this.getCourseList({}, 1, 30);
+    this.getCourseList(this.searchInfo);
   }
 };
 </script>

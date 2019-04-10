@@ -61,7 +61,7 @@ export default {
             params.level = this.levelSelect;
           }
           this.searchInput = "";
-          this.$emit("btnSearch", params);
+          this.$emit("search", params);
         }
       }
     },
@@ -78,7 +78,7 @@ export default {
             params.level = levelSelect;
           }
           this.searchInput = "";
-          this.$emit("btnSearch", params);
+          this.$emit("search", params);
         }
       }
     },
@@ -88,7 +88,7 @@ export default {
         params.name = this.searchInput;
         this.typeSelect = "全部";
         this.levelSelect = "全部";
-        this.$emit("inpurSearch", params);
+        this.$emit("search", params);
       } else {
         this.$message.error({
           message: "搜索内容不能为空",

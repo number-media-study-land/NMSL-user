@@ -7,9 +7,6 @@
       <course-box v-for="item in learnList" :key="item.title" :courseInfo="item"/>
     </div>
     <div v-else class="noClass">还没有学习的课程</div>
-    <div class="pagination">
-      <el-pagination background layout="prev, pager, next" :total="1"></el-pagination>
-    </div>
   </div>
 </template>
 
@@ -40,7 +37,7 @@ export default {
       });
       data = data.data;
       if (data.code === 0) {
-        this.learnList = data.data;
+        this.learnList = data.data || [];
       }
     }
   },
@@ -75,12 +72,6 @@ export default {
     margin: 50px 0;
     text-align: center;
     font-size: 20px;
-  }
-
-  .pagination {
-    margin-top: 50px;
-    margin-bottom: 90px;
-    text-align: center;
   }
 }
 </style>
