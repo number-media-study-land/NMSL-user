@@ -40,6 +40,29 @@
               <h2 class="videoHeadTitle">{{studyVideo.title || null}}</h2>
             </header>
             <video-box :studyVideo="studyVideo"/>
+            <!-- 评论区，暂时不做 -->
+            <div class="commentArea" v-if="flase">
+              <div class="commentWrapper">
+                <h3 class="title">评论区</h3>
+                <div class="newCommentBox">
+                  <div class="inputArea">
+                    <el-input type="textarea" :rows="3" placeholder="发个友善的评论" v-model="newComment"></el-input>
+                  </div>
+                  <div class="subBtnBox">
+                    <el-button type="success" plain class="subBtn">提交</el-button>
+                    <el-button plain>清空</el-button>
+                  </div>
+                </div>
+                <div class="commentContentArea">
+                  <comment-box/>
+                </div>
+                <div class="responseInputArea">
+                  <el-input type="textarea" :rows="3" placeholder="请输入内容" v-model="newResponse"></el-input>
+                  <el-button size="small" round>取消</el-button>
+                  <el-button size="small" type="primary" round>回复</el-button>
+                </div>
+              </div>
+            </div>
           </section>
         </main>
       </div>
@@ -52,11 +75,13 @@ import axios from "@/utils/axios";
 import { mapState } from "vuex";
 import { course, userStudy } from "@/utils/api";
 import VideoBox from "./components/VideoBox";
+import CommentBox from "./components/CommentBox";
 
 export default {
   name: "learn",
   components: {
-    VideoBox
+    VideoBox,
+    CommentBox
   },
   computed: {
     ...mapState(["Xuser"])
@@ -66,7 +91,9 @@ export default {
       isHidden: false,
       videoList: [],
       studyVideo: null,
-      studyProgress: null
+      studyProgress: null,
+      newComment: "",
+      newResponse: ""
     };
   },
   methods: {
@@ -233,6 +260,69 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+        }
+      }
+      .commentArea {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 50px;
+        background-color: #fff;
+
+        .commentWrapper {
+          position: relative;
+          width: 90%;
+
+          .title {
+            padding: 10px 0;
+            border-bottom: 1px solid #4e4e4e;
+            margin: 10px 0;
+            font-weight: 400;
+            color: #4e4e4e;
+          }
+          .newCommentBox {
+            display: flex;
+
+            .inputArea {
+              display: inline-block;
+              width: 70%;
+            }
+            .subBtnBox {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 29%;
+
+              button {
+                width: 30%;
+              }
+
+              .subBtn {
+                margin-right: 6%;
+              }
+            }
+          }
+          .commentContentArea {
+            width: 70%;
+            margin-top: 20px;
+          }
+          .responseInputArea {
+            position: fixed;
+            right: 3%;
+            bottom: 50px;
+            width: 20%;
+            height: 130px;
+            padding: 10px;
+            border: 1px solid #e4e2e2;
+            border-radius: 10px;
+            background: #f6f5f5;
+            box-sizing: border-box;
+
+            button {
+              float: right;
+              margin-top: 5px;
+              margin-right: 10px;
+            }
+          }
         }
       }
     }
