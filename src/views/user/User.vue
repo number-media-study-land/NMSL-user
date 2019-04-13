@@ -2,10 +2,7 @@
   <div class="user">
     <div class="userInfoBox">
       <div class="BgImg">
-        <img
-          src="https://smx-1253369066.cos.ap-chengdu.myqcloud.com/userBG.jpg?q-sign-algorithm=sha1&q-ak=AKID9huR5PYBJQMOj0HRMOABT5BsgEpysVSt&q-sign-time=1553150962;1553152762&q-key-time=1553150962;1553152762&q-header-list=&q-url-param-list=&q-signature=059ad4e52080505b6e7896715d8cad82207f477f&x-cos-security-token=d9015b1baf73d1b9dda149cbcbc14898b893b73210001"
-          alt
-        >
+        <img src="https://smx-1253369066.cos.ap-chengdu.myqcloud.com/userBG.jpg" alt>
       </div>
       <div class="userInfo" v-if="Xuser">
         <div class="userName">{{Xuser.name}}</div>
