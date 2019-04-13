@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "local": "npm run serve"
+    "local": "export NODE_HOST=local&& npm run serve",
+    "net": "export NODE_HOST=net&& npm run serve"
   },
   "dependencies": {
     "axios": "^0.18.0",
