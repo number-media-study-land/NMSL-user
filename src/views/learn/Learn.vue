@@ -40,27 +40,34 @@
               <h2 class="videoHeadTitle">{{studyVideo.title || null}}</h2>
             </header>
             <video-box :studyVideo="studyVideo"/>
-            <!-- 评论区，暂时不做 -->
-            <div class="commentArea" v-if="flase">
+            <div class="commentArea">
               <div class="commentWrapper">
-                <h3 class="title">评论区</h3>
-                <div class="newCommentBox">
-                  <div class="inputArea">
-                    <el-input type="textarea" :rows="3" placeholder="发个友善的评论" v-model="newComment"></el-input>
-                  </div>
-                  <div class="subBtnBox">
-                    <el-button type="success" plain class="subBtn">提交</el-button>
-                    <el-button plain>清空</el-button>
+                <h3 class="title">问答区</h3>
+                <div class="commentQaArea">
+                  <div class="qaTitle">本节问题：</div>
+                  <div class="qaContent" v-if="studyVideo.qa" v-html="studyVideo.qa"></div>
+                  <div class="qaContent" v-else >本节老师没有布置问题</div>
+                </div>
+                <div>
+                  <div class="asTitle">你的回答：</div>
+                  <div class="newCommentBox">
+                    <div class="inputArea">
+                      <el-input type="textarea" :autosize="{ minRows: 3 }" placeholder="写出你的回答" v-model="newComment"></el-input>
+                    </div>
+                    <div class="subBtnBox">
+                      <el-button type="success" plain class="subBtn" @click="pushAn">提交</el-button>
+                      <el-button plain @click="newComment=''">清空</el-button>
+                    </div>
                   </div>
                 </div>
                 <div class="commentContentArea">
-                  <comment-box/>
+                  <comment-box v-for="item in commentList" :key="item._id" :item="item"/>
                 </div>
-                <div class="responseInputArea">
+                <!-- <div class="responseInputArea">
                   <el-input type="textarea" :rows="3" placeholder="请输入内容" v-model="newResponse"></el-input>
                   <el-button size="small" round>取消</el-button>
                   <el-button size="small" type="primary" round>回复</el-button>
-                </div>
+                </div> -->
               </div>
             </div>
           </section>
@@ -73,7 +80,7 @@
 <script>
 import axios from "@/utils/axios";
 import { mapState } from "vuex";
-import { course, userStudy } from "@/utils/api";
+import { course, userStudy, comment } from "@/utils/api";
 import VideoBox from "./components/VideoBox";
 import CommentBox from "./components/CommentBox";
 
@@ -92,8 +99,10 @@ export default {
       videoList: [],
       studyVideo: null,
       studyProgress: null,
+      qaContent: "",
       newComment: "",
-      newResponse: ""
+      commentList: []
+      // newResponse: ""
     };
   },
   methods: {
@@ -114,6 +123,8 @@ export default {
           progressName: videoData.title
         });
       }
+
+      this.getComments(this.studyVideo._id);
     },
     // 判断是否学习到了新的一节
     handleProgress(progress) {
@@ -142,6 +153,11 @@ export default {
           data.data.videoList[this.studyProgress[0] - 1].list[
             this.studyProgress[1] - 1
           ];
+        if (this.studyVideo.qa) {
+          this.studyVideo.qa = this.studyVideo.qa.replace(/\n/g, "<br/><br/>");
+        }
+
+        this.getComments(this.studyVideo._id);
       } else {
         this.$message.error({
           message: `错误：${data.msg}，已返回课程目录`,
@@ -150,6 +166,16 @@ export default {
         setTimeout(() => {
           this.$router.push("/coursemenu");
         }, 1000);
+      }
+    },
+    // 获取评论
+    async getComments(videoId) {
+      let data = await axios.get(comment.getComment, { params: { videoId } });
+      data = data.data;
+      if (data.code === 0) {
+        this.commentList = data.data.comments;
+      } else {
+        this.$message.error(data.msg);
       }
     },
     // 判断用户是否学习过，学过则获取进度，没学则添加
@@ -165,12 +191,31 @@ export default {
         this.studyProgress = [1, 1];
       }
       this.getVideoList(courseId);
+    },
+    // 提交评论
+    async pushAn() {
+      let params = {
+        progressName: this.studyVideo.title,
+        videoId: this.studyVideo._id,
+        commentUser: this.Xuser.name,
+        commentContent: this.newComment,
+        createTime: Math.round(new Date() / 1000)
+      };
+      let data = await axios.post(comment.addComment, { params });
+      data = data.data;
+      if (data.code === 0) {
+        this.$message.success(data.msg);
+        this.newComment = "";
+        this.getComments(this.studyVideo._id);
+      } else {
+        this.$message.error(data.msg);
+      }
     }
   },
   mounted() {
     setTimeout(() => {
       if (!this.Xuser) {
-        this.$message.error(`请登录账号`, 3000);
+        this.$message.error("请登录账号", 3000);
         this.$router.push("/login");
       } else {
         let { courseId } = this.$route.params;
@@ -265,7 +310,7 @@ export default {
       .commentArea {
         display: flex;
         justify-content: center;
-        margin-bottom: 50px;
+        padding-bottom: 50px;
         background-color: #fff;
 
         .commentWrapper {
@@ -278,6 +323,10 @@ export default {
             margin: 10px 0;
             font-weight: 400;
             color: #4e4e4e;
+          }
+          .asTitle {
+            margin: 15px 0;
+            font-size: 17px;
           }
           .newCommentBox {
             display: flex;
@@ -304,6 +353,22 @@ export default {
           .commentContentArea {
             width: 70%;
             margin-top: 20px;
+          }
+          .commentQaArea {
+            width: 70%;
+            margin: 15px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #454d66;
+            box-sizing: border-box;
+
+            .qaTitle {
+              font-size: 17px;
+              margin-bottom: 10px;
+            }
+            .qaContent {
+              padding-left: 30px;
+              margin-bottom: 10px;
+            }
           }
           .responseInputArea {
             position: fixed;

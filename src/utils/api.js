@@ -22,3 +22,8 @@ export const userStudy = {
   courseInUser: "/userStudy/courseInUser",
   updateProgress: "/userStudy/updateProgress"
 };
+
+export const comment = {
+  addComment: "/comment/addComment",
+  getComment: "/comment/getComment"
+};

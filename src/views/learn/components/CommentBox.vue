@@ -1,13 +1,11 @@
 <template>
   <div class="commentBox">
     <div class="commentArea clear-float">
-      <span class="username">aaa：</span>
-      <p
-        class="content"
-      >评论内容评论容评论内容评论内论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容内</p>
-      <el-button class="responseBtn" type="text">回复</el-button>
+      <span class="username">{{item.commentUser}}：</span>
+      <p class="content" v-html="item.commentContent"></p>
+      <!-- <el-button class="responseBtn" type="text">回复</el-button> -->
     </div>
-    <div class="responseArea">
+    <!-- <div class="responseArea">
       <div class="responseBox">
         <span class="username">bbb：</span>
         <p
@@ -22,18 +20,21 @@
         >评论内容评论容评论内容评论内论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容内</p>
         <el-button class="responseBtn" type="text">回复</el-button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 export default {
   name: "commentBox",
-  components: {},
+  props: ["item"],
   data() {
     return {
       newComment: ""
     };
+  },
+  mounted() {
+    this.item.commentContent = this.item.commentContent.replace(/\n/g, "<br/>");
   }
 };
 </script>
@@ -77,7 +78,7 @@ export default {
     margin-top: 5px;
   }
   .content {
-    padding: 0 45px 0 15px;
+    padding: 0 20px 0 15px;
     margin: 0;
     margin-top: 5px;
     font-weight: 300;
